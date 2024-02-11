@@ -13,6 +13,7 @@ namespace Book.DataAccess.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Product { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,27 @@ namespace Book.DataAccess.Data
                 new Category { Id=1, Name= "Action", DisplayOrder = 1 },
                                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+
+                );
+            
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id=1,
+                    Name = "Akura",
+                    StreetAddress = "Thelwatta Junction",
+                    City = "Negombo",
+                    PostalCode = "11500",
+                    State = "Srilanka",
+                    PhoneNumber = "0312238615"
+                },
+                             
+                new Company { Id = 3,
+                    Name = "Samanala",
+                    StreetAddress = "Borella",
+                    City = "Colombo",
+                    PostalCode = "21500",
+                    State = "Srilanka",
+                    PhoneNumber = "0778875354"
+                }
 
                 );
 
