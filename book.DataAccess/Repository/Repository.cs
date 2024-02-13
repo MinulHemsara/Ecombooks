@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Book.DataAccess.Repository
 {
@@ -26,9 +27,18 @@ namespace Book.DataAccess.Repository
             _db.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includePropeties = null)
+        public T Get(Expression<Func<T, bool>>? filter, string? includePropeties = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+            if (tracked)
+            {
+                 query= dbSet;              
+            }
+            else
+            {
+                 query = dbSet.AsNoTracking() ;
+                
+            }
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(includePropeties))
             {
@@ -40,9 +50,16 @@ namespace Book.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includePropeties = null)
+
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includePropeties = null)
         {
             IQueryable<T> query = dbSet;
+            if(filter != null)
+            {
+            query = query.Where(filter);
+
+            }
             if (!string.IsNullOrEmpty(includePropeties))
             {
                 foreach(var includeProp in includePropeties.Split(new char[] { ',' },StringSplitOptions.RemoveEmptyEntries))
