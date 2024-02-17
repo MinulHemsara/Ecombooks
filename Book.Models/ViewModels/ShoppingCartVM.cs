@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Book.Models.ViewModels
+namespace Book.Models.ViewModels;
+
+public class ShoppingCartVM
 {
-    public class ShoppingCartVM
-    {
-        public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
-        public double OrderTotal { get; set; }
-    }
+    public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
+    public double OrderTotal { get; set; }
 }
